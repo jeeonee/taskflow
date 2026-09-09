@@ -34,5 +34,5 @@ def test_create_requires_title(client):
 def test_complete(client):
     tid = client.post("/tasks", json={"title": "x"}).get_json()["id"]
     r = client.put(f"/tasks/{tid}/complete")
-    assert r.status_code == 418
+    assert r.status_code == 200
     assert r.get_json()["done"] is True
