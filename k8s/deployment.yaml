@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskflow
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: taskflow
+  template:
+    metadata:
+      labels:
+        app: taskflow
+    spec:
+      containers:
+        - name: taskflow
+          image: ghcr.io/jeeonee/taskflow:1.0
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
